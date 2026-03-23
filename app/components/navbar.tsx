@@ -25,6 +25,8 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { name: "Home", href: "#home" },
+    { name: "Feature", href: "#feature" },
     { name: "About", href: "#about" },
     { name: "Blog", href: "#blog-section" },
     { name: "Rankings", href: "/rankings" },
@@ -32,15 +34,28 @@ export default function Navbar() {
   ];
 
   const handleHashClick = (hash: string) => {
+  if (hash === "#home") {
     if (pathname === "/") {
-      // Already on homepage — just scroll
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      router.push("/");
+      // after navigation, scroll to top
+      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 300);
+    }
+    return;
+  }
+
+  if (pathname === "/") {
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  } else {
+    router.push(`/${hash}`);
+    setTimeout(() => {
       const el = document.querySelector(hash);
       if (el) el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      // On another page — navigate to homepage with hash
-      router.push(`/${hash}`);
-    }
-  };
+    }, 300);
+  }
+};
 
   return (
     <>

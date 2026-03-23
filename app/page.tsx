@@ -115,7 +115,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
       {/* About section for hash link */}
       <AboutSection />
 
