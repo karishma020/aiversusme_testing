@@ -7,6 +7,7 @@ import SearchAutocomplete from "@/components/search-autocomplete";
 import AboutSection from "@/app/components/about";
 import TrendingJobs from "@/app/components/trending-jobs";
 import BlogSection from "@/app/components/blog";
+import TestimonialsSection from "@/app/components/testimonials";
 import { FaRobot } from "react-icons/fa";
 
 
@@ -119,6 +120,9 @@ export default async function Home() {
 
       {/* Blog section */}
       <BlogSection />
+
+      {/* Testimonials section */}
+      <TestimonialsSection />
     </div>
   );
 }
