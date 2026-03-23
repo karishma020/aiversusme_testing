@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import "./globals.css";
+import "./gAI Take My Job?lobals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Header from "@/components/header";
@@ -9,7 +9,7 @@ import Footer from "@/app/components/footer";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "AI vs ME",
+  title: " AI vs ME ",
   description: "Find out the automation risk for your job, get AI-powered career insights, and discover future-proof skills.",
 };
 

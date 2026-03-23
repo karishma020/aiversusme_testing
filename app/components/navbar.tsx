@@ -11,13 +11,13 @@ export default function Navbar() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const { isSignedIn } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
-      setVisible(currentScroll > 50);
+      // Remove setVisible(currentScroll > 50) so it's always on screen
       setScrolled(currentScroll > 20);
     };
     window.addEventListener("scroll", handleScroll);

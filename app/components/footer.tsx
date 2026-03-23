@@ -71,7 +71,7 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-          <span>© {new Date().getFullYear()} AI vs ME. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} AI Job Risk. All rights reserved.</span>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-gray-300">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-gray-300">Terms of Service</Link>
