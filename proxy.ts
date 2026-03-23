@@ -10,6 +10,8 @@ export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
     auth.protect();
   }
+}, {
+  authorizedParties: ['http://localhost:3000', 'http://127.0.0.1:3000']
 });
 
 export const config = {

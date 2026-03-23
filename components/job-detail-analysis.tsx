@@ -58,6 +58,32 @@ export default function JobDetailAnalysis({ job }: JobDetailAnalysisProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { isSignedIn } = useAuth();
+  const [pollData, setPollData] = useState<{ highly_likely: number; moderate: number; uncertain: number; low: number; no_chance: number } | null>(null);
+  const [choice, setChoice] = useState<"highly_likely" | "moderate" | "uncertain" | "low" | "no_chance" | null>(null);
+  const [pollMessage, setPollMessage] = useState<string | null>(null);
+
+  function recommendCerts(title: string) {
+    const t = title.toLowerCase();
+    if (t.includes("data") || t.includes("analyst") || t.includes("scientist")) {
+      return ["Google Data Analytics", "IBM Data Science", "AWS Data Analytics", "Microsoft Azure DP-100", "Tableau Desktop", "Power BI Analyst PL-300"];
+    }
+    if (t.includes("developer") || t.includes("engineer") || t.includes("programmer")) {
+      return ["AWS Solutions Architect Associate", "Azure AZ-104", "Google Professional Cloud Developer", "Meta Front-End", "React Nanodegree", "Kubernetes CKAD"];
+    }
+    if (t.includes("accountant") || t.includes("finance")) {
+      return ["ACCA Foundations", "CPA fundamentals", "Tally with GST", "SAP FI basics", "Financial Modeling", "Excel Advanced"];
+    }
+    if (t.includes("marketing")) {
+      return ["Google Ads", "Meta Blueprint", "HubSpot Content", "SEO Specialization", "GA4 Analytics", "Email Marketing"];
+    }
+    if (t.includes("designer")) {
+      return ["Adobe Certified Professional", "Figma UI Design", "UX Research", "Motion Graphics", "3D Modeling Basics", "Brand Design"];
+    }
+    if (t.includes("electrical") || t.includes("mechanical") || t.includes("civil")) {
+      return ["AutoCAD", "SolidWorks", "PLC SCADA", "Primavera P6", "ANSYS Basics", "Quality Management"];
+    }
+    return ["Communication Skills", "Project Management Basics", "SQL Fundamentals", "Git & GitHub", "Python Essentials", "Cloud Foundations"];
+  }
 
   useEffect(() => {
     const fetchAnalysis = async () => {
@@ -81,6 +107,15 @@ export default function JobDetailAnalysis({ job }: JobDetailAnalysisProps) {
       setLoading(false);
     }
   }, [job.title, isSignedIn]);
+
+  useEffect(() => {
+    const loadPoll = async () => {
+      if (!isSignedIn) return;
+      const res = await axios.get(`/api/polls/${job.slug}`, { withCredentials: true });
+      setPollData(res.data);
+    };
+    loadPoll();
+  }, [isSignedIn, job.slug]);
 
   const risk = data?.scores?.automation_risk ?? job.risk_score;
   const riskLevel = risk > 70 ? "Imminent Risk" : risk > 30 ? "Moderate Risk" : "Minimal Risk";
@@ -207,26 +242,64 @@ export default function JobDetailAnalysis({ job }: JobDetailAnalysisProps) {
               {(data?.scores?.automation_risk ?? risk)}% chance of full automation within the next two decades
             </StatusBox>
             <p className="text-[#94a3b8] mb-8 leading-relaxed">
-              Our AI analysis estimates a {(data?.scores?.automation_risk ?? risk)}% chance of automation. This is based on current trends in robotics and AI integration in the {job.title} sector.
+              Our AI analysis estimates a {(data?.scores?.automation_risk ?? risk)}% chance of automation.
             </p>
-            <div className="bg-[#25282c] border border-white/5 rounded-3xl p-8 max-w-lg">
+            <div className="bg-[#25282c] border border-white/5 rounded-3xl p-8 max-w-xl w-full">
               <h4 className="text-2xl font-bold mb-4">What do you think the risk of automation is?</h4>
-              <p className="text-[#94a3b8] text-sm mb-6">
-                What is the likelihood that <span className="font-bold">{job.title}</span> will be replaced by robots or artificial intelligence within the next 20 years?
-              </p>
-              <div className="space-y-4 mb-8">
-                {["Highly likely", "Moderate", "Uncertain", "Low", "No chance"].map((option) => (
-                  <label key={option} className="flex items-center gap-3 cursor-pointer group">
-                    <div className="h-5 w-5 rounded-full border-2 border-blue-500/50 group-hover:border-blue-500 flex items-center justify-center transition-colors">
-                      <div className="h-2.5 w-2.5 rounded-full bg-transparent group-active:bg-blue-500" />
-                    </div>
-                    <span className="text-sm text-[#94a3b8] group-hover:text-white transition-colors">{option}</span>
-                  </label>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                <button onClick={() => setChoice("highly_likely")} className={`px-4 py-2 rounded-md border ${choice==="highly_likely"?"border-blue-500 text-white":"border-white/10 text-[#94a3b8]"}`}>Highly likely</button>
+                <button onClick={() => setChoice("moderate")} className={`px-4 py-2 rounded-md border ${choice==="moderate"?"border-blue-500 text-white":"border-white/10 text-[#94a3b8]"}`}>Moderate</button>
+                <button onClick={() => setChoice("uncertain")} className={`px-4 py-2 rounded-md border ${choice==="uncertain"?"border-blue-500 text-white":"border-white/10 text-[#94a3b8]"}`}>Uncertain</button>
+                <button onClick={() => setChoice("low")} className={`px-4 py-2 rounded-md border ${choice==="low"?"border-blue-500 text-white":"border-white/10 text-[#94a3b8]"}`}>Low</button>
+                <button onClick={() => setChoice("no_chance")} className={`px-4 py-2 rounded-md border ${choice==="no_chance"?"border-blue-500 text-white":"border-white/10 text-[#94a3b8]"}`}>No chance</button>
               </div>
-              <button className="bg-[#00e5ff] hover:bg-[#00b8cc] text-black font-black px-8 py-3 rounded-xl transition-colors text-sm">
-                Submit vote
-              </button>
+              <div className="flex items-center gap-3 mb-6">
+                <button
+                  onClick={async () => {
+                    if (!choice) return;
+                    const res = await axios.post(`/api/polls/${job.slug}`, { option: choice }, { withCredentials: true });
+                    setPollData(res.data);
+                    setPollMessage("Poll submitted!");
+                    setTimeout(() => setPollMessage(null), 2500);
+                  }}
+                  disabled={!choice}
+                  className="bg-[#00e5ff] hover:bg-[#00b8cc] text-black font-black px-8 py-3 rounded-xl transition-colors text-sm disabled:opacity-50"
+                >
+                  Submit vote
+                </button>
+                {pollMessage && <span className="text-sm text-green-400">{pollMessage}</span>}
+              </div>
+              {pollData && (
+                <div className="space-y-2">
+                  {([
+                    { k: "highly_likely", label: "Highly likely", color: "bg-red-500" },
+                    { k: "moderate", label: "Moderate", color: "bg-orange-500" },
+                    { k: "uncertain", label: "Uncertain", color: "bg-yellow-500" },
+                    { k: "low", label: "Low", color: "bg-green-500" },
+                    { k: "no_chance", label: "No chance", color: "bg-blue-500" },
+                  ] as Array<{ k: keyof typeof pollData; label: string; color: string }>).map((o) => {
+                    const total =
+                      pollData.highly_likely +
+                      pollData.moderate +
+                      pollData.uncertain +
+                      pollData.low +
+                      pollData.no_chance || 1;
+                    const val = pollData[o.k];
+                    const pct = Math.round((val / total) * 100);
+                    return (
+                      <div key={o.k} className="text-xs">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-[#94a3b8]">{o.label}</span>
+                          <span className="text-[#94a3b8]">{pct}%</span>
+                        </div>
+                        <div className="h-2 bg-[#111315] rounded">
+                          <div className={`h-2 ${o.color} rounded`} style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </section>
 
@@ -326,6 +399,16 @@ export default function JobDetailAnalysis({ job }: JobDetailAnalysisProps) {
               <div className="space-y-4 text-[#94a3b8] mb-8 leading-relaxed">
                 <p>Median annual wage for <span className="font-bold">{job.title}</span> is currently estimated at <span className="font-bold text-white">{job.salary}</span>.</p>
                 <p>Alternative career paths: <span className="font-bold text-white">{(data?.alternatives || []).join(", ")}</span>.</p>
+              </div>
+              <div className="bg-[#25282c] border border-white/5 rounded-3xl p-8">
+                <h4 className="text-xl font-bold mb-4">Recommended certificate courses</h4>
+                <ul className="grid grid-cols-1 gap-2 text-sm text-[#94a3b8]">
+                  {recommendCerts(job.title).map((c, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-blue-500" /> {c}
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="bg-[#25282c] border border-white/5 rounded-3xl p-8">
                 <h4 className="text-xl font-bold mb-8">Wages over time</h4>

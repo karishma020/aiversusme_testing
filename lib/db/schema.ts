@@ -18,3 +18,13 @@ export const jobs = pgTable("jobs", {
   description: text("description").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
 });
+
+export const jobPolls = pgTable("job_polls", {
+  slug: text("slug").unique().notNull(),
+  highly_likely: integer("highly_likely").default(0).notNull(),
+  moderate: integer("moderate").default(0).notNull(),
+  uncertain: integer("uncertain").default(0).notNull(),
+  low: integer("low").default(0).notNull(),
+  no_chance: integer("no_chance").default(0).notNull(),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
