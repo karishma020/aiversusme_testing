@@ -8,6 +8,7 @@ import AboutSection from "@/app/components/about";
 import TrendingJobs from "@/app/components/trending-jobs";
 import BlogSection from "@/app/components/blog";
 import TestimonialsSection from "@/app/components/testimonials";
+import HowItWorksSection from "@/app/components/howtouse";
 import { FaRobot } from "react-icons/fa";
 import ContactSection from "./components/contact";
 
@@ -76,6 +77,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <HowItWorksSection />
+
       {/* Featured Jobs Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
         <div className="container px-4 md:px-6">
@@ -102,8 +106,8 @@ export default async function Home() {
                     <span className={cn(
                       "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
                       job.risk_score < 30 ? "bg-green-100 text-green-700" :
-                      job.risk_score < 70 ? "bg-yellow-100 text-yellow-700" :
-                      "bg-red-100 text-red-700"
+                        job.risk_score < 70 ? "bg-yellow-100 text-yellow-700" :
+                          "bg-red-100 text-red-700"
                     )}>
                       {job.risk_score}% Risk
                     </span>
@@ -120,7 +124,7 @@ export default async function Home() {
 
       {/* Blog section */}
       <BlogSection />
-       {/* Testimonials section */}
+      {/* Testimonials section */}
       <TestimonialsSection />
 
       {/* Contact section */}
