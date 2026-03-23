@@ -8,6 +8,7 @@ import AboutSection from "@/app/components/about";
 import TrendingJobs from "@/app/components/trending-jobs";
 import BlogSection from "@/app/components/blog";
 import { FaRobot } from "react-icons/fa";
+import ContactSection from "./components/contact";
 
 
 export default async function Home() {
@@ -119,6 +120,8 @@ export default async function Home() {
 
       {/* Blog section */}
       <BlogSection />
+      {/* Contact section */}
+      <ContactSection />
     </div>
   );
 }
