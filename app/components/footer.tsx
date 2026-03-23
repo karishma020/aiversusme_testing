@@ -43,7 +43,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <span className="text-gray-400 uppercase text-xs">Company</span>
               <Link href="#" className="hover:text-gray-300">Careers</Link>
-              <Link href="#" className="hover:text-gray-300">Blog</Link>
+              <Link href="/#blog-section" className="hover:text-gray-300">Blog</Link>
               <Link href="#" className="hover:text-gray-300">Contact</Link>
             </div>
 

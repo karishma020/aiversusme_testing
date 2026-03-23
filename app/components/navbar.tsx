@@ -31,7 +31,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "About", href: "#about" }, // 👈 scroll link
+    { name: "About", href: "/#about" },
+    { name: "Blog", href: "/#blog-section" },
     { name: "Rankings", href: "/rankings" },
   ];
 
@@ -103,7 +104,7 @@ export default function Navbar() {
           {/* LOGIN BUTTON */}
           <div className="hidden md:block">
             {isSignedIn ? (
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             ) : (
               <SignInButton mode="modal">
                 <button className="bg-white text-black px-4 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200 transition">
@@ -164,7 +165,7 @@ export default function Navbar() {
             </button>
           ) : (
             <div className="bg-white text-black px-3 py-2 rounded-full">
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             </div>
           )}
         </div>

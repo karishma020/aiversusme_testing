@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import SearchAutocomplete from "@/components/search-autocomplete";
 import AboutSection from "@/app/components/about";
 import TrendingJobs from "@/app/components/trending-jobs";
+import BlogSection from "@/app/components/blog";
 import { FaRobot } from "react-icons/fa";
 
 export default async function Home() {
@@ -114,6 +115,9 @@ export default async function Home() {
 
       {/* About section for hash link */}
       <AboutSection />
+
+      {/* Blog section */}
+      <BlogSection />
     </div>
   );
 }
