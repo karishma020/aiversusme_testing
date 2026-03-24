@@ -20,7 +20,7 @@ export default function HeaderContent({ userId }: HeaderContentProps) {
               <Link href="/dashboard" className="text-sm font-medium hover:underline underline-offset-4">
                 Dashboard
               </Link>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             </div>
           ) : (
             <div className="flex items-center gap-4">

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
 import * as dotenv from "dotenv";
-import { getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 dotenv.config({ path: ".env" });
 export const runtime = "nodejs";
@@ -75,7 +75,7 @@ const providers: AiProvider[] = [
 // --- Main API Route Handler ---
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = getAuth(req);
+    const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
