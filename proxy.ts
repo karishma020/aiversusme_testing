@@ -1,17 +1,21 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
+// Define the routes that require authentication
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
   '/rankings(.*)',
   '/api/ai-analysis(.*)',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
+export default clerkMiddleware((auth, req) => {
+  // Protect the routes defined above
   if (isProtectedRoute(req)) {
-    await auth.protect();
+    auth.protect();
   }
 });
 
 export const config = {
-  matcher: ['/((?!.*\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  // This matcher ensures the middleware runs on all routes
+  // except for static files and Next.js internals.
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
