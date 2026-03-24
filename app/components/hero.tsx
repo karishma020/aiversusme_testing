@@ -27,10 +27,10 @@ const exploreLinks = [
 export default function LandingHero() {
   return (
     <section className="w-full min-h-[100vh] flex items-center justify-center bg-black px-4 pt-32">
-
+      
       {/* CONTAINER */}
       <div className="w-full max-w-4xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 text-center shadow-lg">
-      <Image src="/aiversusume.jpeg" alt="" width={500} height={500} />
+      
 
         {/* HEADING */}
         <h1 className="text-2xl md:text-4xl font-semibold text-white mb-3">
