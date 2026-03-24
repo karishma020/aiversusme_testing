@@ -26,22 +26,22 @@ export default function FeatureSection() {
 function FeaturesTop() {
   const steps = [
     {
-      title: "Go where the workers are:",
-      description: "We help ¾ of all US hourly workers find jobs each year.",
+      title: "Understand your job risk clearly:",
+      description: "Get a data-backed AI Risk Score that shows how automation could impact your role.",
       icon: Users,
       color: "text-blue-400",
       glowHover: "group-hover:shadow-[0_0_15px_rgba(96,165,250,0.4)]",
     },
     {
-      title: "Get matched with the right people:",
-      description: "50% fewer applicants needed to make a hire.",
+      title: "Make informed career decisions:",
+      description: "Access salary trends, job demand, and growth projections in one place.",
       icon: CheckCircle2,
       color: "text-purple-400",
       glowHover: "group-hover:shadow-[0_0_15px_rgba(192,132,252,0.4)]",
     },
     {
-      title: "Fill jobs and shifts on demand:",
-      description: "70% of shifts are filled in 10 minutes or less.",
+      title: "Plan your next move with confidence:",
+      description: "Discover safer career paths, upskilling options, and future-ready roles.",
       icon: Clock,
       color: "text-cyan-400",
       glowHover: "group-hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]",
@@ -54,13 +54,13 @@ function FeaturesTop() {
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
-        
+
         {/* LEFT SIDE */}
         <div className="flex flex-col space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
           <h2 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/70 max-w-md">
-            Why people love us as they got jobs of their choise
+            Why people rely on us to stay ahead of AI
           </h2>
-          
+
           <div className="flex flex-col space-y-8">
             {steps.map((step, idx) => (
               <div key={idx} className="group flex items-start gap-4 transition-transform duration-300 hover:translate-x-2 cursor-default">
@@ -128,8 +128,8 @@ function FeaturesTop() {
 function FeaturesBottom() {
   const cards = [
     {
-      title: "A Better Job",
-      description: "We source jobs directly from employer websites so you can get the highest-quality, most accurate listings. No duplicates. No spam.",
+      title: " AI Risk Insights",
+      description: "Understand how vulnerable your job is to automation using real data and trend analysis.",
       ctaText: "Search Job Posting",
       icon: Briefcase,
       color: "text-blue-400",
@@ -138,8 +138,8 @@ function FeaturesBottom() {
       iconBorder: "border-blue-500/20"
     },
     {
-      title: "A Helpful Community",
-      description: "We source jobs directly from employer websites so you can get the highest-quality, most accurate listings. No duplicates. No spam.",
+      title: "Career Intelligence",
+      description: "Explore salaries, demand levels, and growth forecasts for different professions.",
       ctaText: "Explore Community",
       icon: UsersRound,
       color: "text-purple-400",
@@ -148,8 +148,8 @@ function FeaturesBottom() {
       iconBorder: "border-purple-500/20"
     },
     {
-      title: "A Standout Profile",
-      description: "We source jobs directly from employer websites so you can get the highest-quality, most accurate listings. No duplicates. No spam.",
+      title: "Future Pathways",
+      description: "Get guidance on what to learn next, alternative careers, and how to stay relevant.",
       ctaText: "Start Your Profile",
       icon: UserCircle,
       color: "text-cyan-400",
