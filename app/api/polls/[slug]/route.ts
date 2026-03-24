@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { jobPolls } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { sql } from "drizzle-orm";
 
 function randomDistribution(total: number) {
   const parts = Array.from({ length: 5 }, () => Math.random());
@@ -19,9 +18,9 @@ function randomDistribution(total: number) {
   };
 }
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(req: NextRequest, { params: paramsPromise }: { params: Promise<{ slug: string }> }) {
   try {
-    const slug = params.slug;
+    const { slug } = await paramsPromise;
     if (!slug) return NextResponse.json({ error: "Missing slug" }, { status: 400 });
     let row = await db.select().from(jobPolls).where(eq(jobPolls.slug, slug)).limit(1);
     if (row.length === 0) {
@@ -37,9 +36,9 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
   }
 }
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+export async function POST(req: NextRequest, { params: paramsPromise }: { params: Promise<{ slug: string }> }) {
   try {
-    const slug = params.slug;
+    const { slug } = await paramsPromise;
     const raw = await req.text().catch(() => "");
     let parsed: Record<string, unknown> = {};
     try {
