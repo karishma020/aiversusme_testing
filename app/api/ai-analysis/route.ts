@@ -5,6 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 
 export const runtime = "nodejs";
 
+// Server-side cache to reduce API calls to AI providers
+const serverCache = new Map<string, any>();
+
 // Unified interface for AI provider configurations
 interface AiProvider {
   name: string;
@@ -84,11 +87,75 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Job title is required" }, { status: 400 });
     }
 
-    const prompt = `Analyze the job role: ${job_title} in India. 
+    // Check server-side cache
+    if (serverCache.has(job_title)) {
+      console.log(`Cache hit for ${job_title}`);
+      return NextResponse.json(serverCache.get(job_title));
+    }
+
+    const prompt = `You are an expert data analyst, AI strategist, and business consultant.
+Your task is to deeply analyze the job role: ${job_title} in the context of the Indian market.
+
+## YOUR OBJECTIVE:
+Do NOT just describe visuals. You must INTERPRET, EXTRACT MEANING, and PROVIDE BUSINESS INSIGHTS.
+Convert data -> insights -> decisions. Avoid generic statements.
+
 CRITICAL: You must return a valid JSON object with the following structure. Do not include any other text or explanation outside the JSON.
 
 Required JSON structure:
-{ ... }`;
+{
+  "executive_summary": "3-5 lines overall conclusion.",
+  "risk_analysis": "Detailed explanation of what the % risk means in real-world impact.",
+  "strategic_advice": {
+    "individuals": "Actionable career advice.",
+    "businesses": "Advice for business owners/consultants."
+  },
+  "task_analysis": {
+    "replaceable": ["Task 1 with reasoning", "Task 2 with reasoning"],
+    "non_replaceable": ["Task 1 with reasoning", "Task 2 with reasoning"]
+  },
+  "explanation": "Brief overview of automation impact (legacy field).",
+  "future": "Detailed trend analysis and future outlook (5-10 years).",
+  "skills": ["List 5-8 future-proof skills"],
+  "alternatives": ["List 5-8 safer career paths"],
+  "scores": {
+    "automation_risk": 0-100,
+    "growth_potential": 0-100,
+    "wage_score": 0-100,
+    "job_volume": 0-100,
+    "overall_job_score": 1-10
+  },
+  "employment_history": [20 historical/projected data points],
+  "wage_history": [
+    { "year": 2015-2024, "job_wage": number, "national_median": number }
+  ],
+  "drivers": [
+    { "name": "Factor", "impact": 0-100 }
+  ],
+  "task_impact": {
+    "replaced": percentage,
+    "augmented": percentage,
+    "preserved": percentage
+  },
+  "regional_demand": [
+    { "region": "City/State", "demand": 0-100 }
+  ],
+  "wage_forecast": [
+    { "year": 2025-2030, "forecast": number }
+  ],
+  "hiring_trend": [
+    { "month": "2024-01", "postings": number }
+  ],
+  "timeline": [
+    { "year": 2025-2030, "event": "Milestone", "risk_change": -50 to 50 }
+  ]
+}
+
+## ANALYSIS RULES:
+- If visuals/data are unclear, infer intelligently.
+- Translate automation probability into business and career implications.
+- Back every insight with reasoning.
+- Final Verdict should be implicitly clear in the explanation (Safe, Evolving, or At Risk).`;
 
     let aiContent = "";
     const providerErrors: Array<{ provider: string; status?: number; message: string }> = [];
@@ -199,7 +266,23 @@ Required JSON structure:
     const hiring_trend = arr<Record<string, unknown>>(input.hiring_trend, []).map((m) => ({ month: getStr(m, "month", "2025-01"), postings: getNum(m, "postings", 100) })).slice(0, 12);
     const timeline = arr<Record<string, unknown>>(input.timeline, []).map((t) => ({ year: getNum(t, "year", 2025), event: getStr(t, "event", "Milestone"), risk_change: getNum(t, "risk_change", 0) })).slice(0, 6);
 
+    const strategic_advice_in = obj(input.strategic_advice);
+    const strategic_advice = {
+      individuals: s(strategic_advice_in.individuals, "Actionable career advice."),
+      businesses: s(strategic_advice_in.businesses, "Strategic business advice.")
+    };
+
+    const task_analysis_in = obj(input.task_analysis);
+    const task_analysis = {
+      replaceable: arr<string>(task_analysis_in.replaceable, []),
+      non_replaceable: arr<string>(task_analysis_in.non_replaceable, [])
+    };
+
     const normalized = {
+      executive_summary: s(input.executive_summary, "Executive summary pending."),
+      risk_analysis: s(input.risk_analysis, "Risk analysis pending."),
+      strategic_advice,
+      task_analysis,
       explanation: s(input.explanation, "Analysis pending."),
       future: s(input.future, "Outlook pending."),
       skills,
@@ -214,6 +297,9 @@ Required JSON structure:
       hiring_trend,
       timeline,
     };
+
+    // Save to server cache
+    serverCache.set(job_title, normalized);
 
     return NextResponse.json(normalized);
   } catch (error: unknown) {

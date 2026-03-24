@@ -15,6 +15,13 @@
       "when": 1774001650021,
       "tag": "0001_spooky_stellaris",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774349931880,
+      "tag": "0002_sticky_lady_ursula",
+      "breakpoints": true
     }
   ]
 }
