@@ -135,7 +135,7 @@ export default function Footer() {
               />
             </a>
 
-            <a href="https://panamacorp.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://panamacorporationltd.com/" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/partners/panama.png"
                 alt="Panama Corporation"
@@ -145,7 +145,7 @@ export default function Footer() {
               />
             </a>
 
-            <a href="https://surepass.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://thesurepass.com/" target="_blank" rel="noopener noreferrer">
               <Image
                 src="/partners/surepass.jpeg"
                 alt="Surepass"
