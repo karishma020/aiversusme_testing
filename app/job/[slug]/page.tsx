@@ -6,8 +6,6 @@ import JobDetailAnalysis from "@/components/job-detail-analysis";
 import { ChevronDown } from "lucide-react";
 import * as dotenv from "dotenv";
 
-dotenv.config({ path: ".env" });
-
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
   <h2 className="text-2xl font-bold tracking-tight mb-6">{children}</h2>
 );

@@ -6,12 +6,10 @@ const isProtectedRoute = createRouteMatcher([
   '/api/ai-analysis(.*)',
 ]);
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
-    auth.protect();
+    await auth.protect();
   }
-}, {
-  authorizedParties: ['http://localhost:3000', 'http://127.0.0.1:3000']
 });
 
 export const config = {

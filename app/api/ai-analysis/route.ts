@@ -3,7 +3,6 @@ import axios, { AxiosError } from "axios";
 import * as dotenv from "dotenv";
 import { auth } from "@clerk/nextjs/server";
 
-dotenv.config({ path: ".env" });
 export const runtime = "nodejs";
 
 // Unified interface for AI provider configurations
