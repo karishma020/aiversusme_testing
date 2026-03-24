@@ -11,6 +11,7 @@ import TestimonialsSection from "@/app/components/testimonials";
 import HowItWorksSection from "@/app/components/howtouse";
 import { FaRobot } from "react-icons/fa";
 import ContactSection from "./components/contact";
+import FeatureSection from "@/app/components/featuresection";
 
 
 export default async function Home() {
@@ -76,6 +77,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Features Section */}
+      <FeatureSection />
 
       {/* How It Works Section */}
       <HowItWorksSection />
