@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>", // free resend default sender
-      to: "karishma.cs22@sahyadri.edu.in",
+      to: "support@torsecure.com",
       subject: `[Contact Form] ${subject}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background: #f9f9f9; border-radius: 8px;">

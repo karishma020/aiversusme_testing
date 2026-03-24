@@ -90,10 +90,9 @@ export default function ContactSection() {
             <div>
               <p className="text-white font-semibold text-xs mb-1">Office Address</p>
               <p className="text-gray-400 text-xs leading-relaxed">
-                <span className="text-white font-medium">(India)</span> PANAMA HOUSE, Door No 1-24/1, Kuloor-Kavoor Airport Road, Viveknagar, Mangalore-575013, Karnataka State, India
+                <span className="text-white font-medium"></span>Torsecure Cyber LLP, Door No. 4-9-765/17, Second Floor, Manasa Towers, MG Road, Kodialbail, Mangalore, Karnataka
               </p>
               <p className="text-gray-400 text-xs leading-relaxed mt-1.5">
-                <span className="text-white font-medium">(USA)</span> 5534 Saint Joe Road, Fort Wayne, IN 46835, US
               </p>
             </div>
           </div>
@@ -107,7 +106,7 @@ export default function ContactSection() {
             </div>
             <div>
               <p className="text-white font-semibold text-xs mb-1">Call Us</p>
-              <p className="text-gray-400 text-xs">+91 82443 56751</p>
+              <p className="text-gray-400 text-xs">+91 89515 11111</p>
             </div>
           </div>
 
@@ -121,7 +120,7 @@ export default function ContactSection() {
             </div>
             <div>
               <p className="text-white font-semibold text-xs mb-1">Email Us</p>
-              <p className="text-gray-400 text-xs">karishma.cs22@sahyadri.edu.in</p>
+              <p className="text-gray-400 text-xs">support@torsecure.com</p>
             </div>
           </div>
         </div>
