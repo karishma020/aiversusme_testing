@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { jobPolls } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -19,24 +19,10 @@ function randomDistribution(total: number) {
   };
 }
 
-export async function GET(req: Request, ctx: { params?: { slug?: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
-    const url = new URL(req.url);
-    const pathParts = url.pathname.split("/").filter(Boolean);
-    const derived = pathParts[pathParts.length - 1];
-    const slug = ctx?.params?.slug || derived;
+    const slug = params.slug;
     if (!slug) return NextResponse.json({ error: "Missing slug" }, { status: 400 });
-    await db.execute(sql`
-      CREATE TABLE IF NOT EXISTS "job_polls" (
-        "slug" text PRIMARY KEY,
-        "highly_likely" integer NOT NULL DEFAULT 0,
-        "moderate" integer NOT NULL DEFAULT 0,
-        "uncertain" integer NOT NULL DEFAULT 0,
-        "low" integer NOT NULL DEFAULT 0,
-        "no_chance" integer NOT NULL DEFAULT 0,
-        "created_at" timestamp NOT NULL DEFAULT now()
-      );
-    `);
     let row = await db.select().from(jobPolls).where(eq(jobPolls.slug, slug)).limit(1);
     if (row.length === 0) {
       const total = 100 + Math.floor(Math.random() * 400);
@@ -51,23 +37,9 @@ export async function GET(req: Request, ctx: { params?: { slug?: string } }) {
   }
 }
 
-export async function POST(req: Request, ctx: { params?: { slug?: string } }) {
+export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
-    const url = new URL(req.url);
-    const pathParts = url.pathname.split("/").filter(Boolean);
-    const derived = pathParts[pathParts.length - 1];
-    const slug = ctx?.params?.slug || derived;
-    await db.execute(sql`
-      CREATE TABLE IF NOT EXISTS "job_polls" (
-        "slug" text PRIMARY KEY,
-        "highly_likely" integer NOT NULL DEFAULT 0,
-        "moderate" integer NOT NULL DEFAULT 0,
-        "uncertain" integer NOT NULL DEFAULT 0,
-        "low" integer NOT NULL DEFAULT 0,
-        "no_chance" integer NOT NULL DEFAULT 0,
-        "created_at" timestamp NOT NULL DEFAULT now()
-      );
-    `);
+    const slug = params.slug;
     const raw = await req.text().catch(() => "");
     let parsed: Record<string, unknown> = {};
     try {

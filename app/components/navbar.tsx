@@ -72,7 +72,7 @@ export default function Navbar() {
         >
           {/* LOGO */}
           <div className="flex items-center gap-2">
-            <img src="/aiversusumebg.png" alt="logo" height={100} width={100} />
+            <img src="/bgremovedlogo.png" alt="logo" height={100} width={100} />
           </div>
 
           {/* DESKTOP LINKS */}
