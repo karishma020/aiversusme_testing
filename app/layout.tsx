@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import Footer from "@/app/components/footer";
 import { cn } from "@/lib/utils";
 
+
 export const metadata: Metadata = {
   title: " AI vs ME ",
   description: "Find out the automation risk for your job, get AI-powered career insights, and discover future-proof skills.",
