@@ -10,7 +10,7 @@ const steps = [
     description: "Enter your job title or explore trending careers to get started.",
     icon: Search,
     iconColor: "text-cyan-400",
-    glowColor: "group-hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]", // cyan glow
+    glowColor: "group-hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]",
   },
   {
     num: "02",
@@ -18,7 +18,7 @@ const steps = [
     description: "Our system evaluates automation risk using advanced data and AI models.",
     icon: BrainCircuit,
     iconColor: "text-purple-400",
-    glowColor: "group-hover:shadow-[0_0_20px_rgba(192,132,252,0.2)]", // purple glow
+    glowColor: "group-hover:shadow-[0_0_20px_rgba(192,132,252,0.2)]",
   },
   {
     num: "03",
@@ -26,7 +26,7 @@ const steps = [
     description: "Receive AI risk score, salary insights, demand trends, and career guidance.",
     icon: TrendingUp,
     iconColor: "text-blue-400",
-    glowColor: "group-hover:shadow-[0_0_20px_rgba(96,165,250,0.2)]", // blue glow
+    glowColor: "group-hover:shadow-[0_0_20px_rgba(96,165,250,0.2)]",
   }
 ];
 
@@ -49,7 +49,7 @@ export default function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mb-4">
-            Understand your career’s future in just a few steps
+            Understand your career&apos;s future in just a few steps
           </p>
         </div>
 
@@ -90,7 +90,6 @@ export default function HowItWorksSection() {
                 <p className="text-gray-400 text-lg leading-relaxed relative z-10 group-hover:text-gray-300 transition-colors">
                   {step.description}
                 </p>
-
               </div>
             );
           })}

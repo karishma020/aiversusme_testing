@@ -50,7 +50,6 @@ function FeaturesTop() {
 
   return (
     <section id="feature" className="relative bg-[#050505] py-16 md:py-24 px-6 lg:px-12 xl:px-24 overflow-hidden">
-      {/* Soft radial glow behind content */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
@@ -82,17 +81,14 @@ function FeaturesTop() {
 
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center lg:justify-end items-center mt-10 lg:mt-0 animate-in fade-in slide-in-from-right-8 duration-700">
-          {/* Soft blur behind image */}
           <div className="absolute w-[90%] h-[90%] bg-white/[0.03] rounded-[4rem] -rotate-6 z-0 right-4 lg:right-6 blur-2xl" />
 
-          {/* Main Image */}
           <div className="relative z-10 w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] group">
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
               alt="Man working on laptop"
               className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#07090F]/90 via-[#07090F]/20 to-transparent pointer-events-none" />
           </div>
 
@@ -117,9 +113,7 @@ function FeaturesTop() {
             </div>
             <span className="text-sm font-medium text-white/90">10x time faster</span>
           </div>
-
         </div>
-
       </div>
     </section>
   );
@@ -128,7 +122,7 @@ function FeaturesTop() {
 function FeaturesBottom() {
   const cards = [
     {
-      title: " AI Risk Insights",
+      title: "AI Risk Insights",
       description: "Understand how vulnerable your job is to automation using real data and trend analysis.",
       ctaText: "Search Job Posting",
       icon: Briefcase,
@@ -172,17 +166,7 @@ function FeaturesBottom() {
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {cards.map((card, idx) => (
-            <FeatureCard
-              key={idx}
-              title={card.title}
-              description={card.description}
-              ctaText={card.ctaText}
-              icon={card.icon}
-              color={card.color}
-              bgHover={card.bgHover}
-              iconBg={card.iconBg}
-              iconBorder={card.iconBorder}
-            />
+            <FeatureCard key={idx} {...card} />
           ))}
         </div>
 
@@ -202,44 +186,20 @@ function FeaturesBottom() {
 }
 
 function FeatureCard({
-  title,
-  description,
-  ctaText,
-  icon: Icon,
-  color,
-  bgHover,
-  iconBg,
-  iconBorder
+  title, description, ctaText, icon: Icon, color, bgHover, iconBg, iconBorder
 }: {
-  title: string;
-  description: string;
-  ctaText: string;
-  icon: React.ElementType;
-  color?: string;
-  bgHover?: string;
-  iconBg?: string;
-  iconBorder?: string;
+  title: string; description: string; ctaText: string; icon: React.ElementType;
+  color?: string; bgHover?: string; iconBg?: string; iconBorder?: string;
 }) {
   return (
     <div className={`flex flex-col bg-white/5 p-8 rounded-2xl border border-white/10 transition-all duration-300 h-full group ${bgHover || 'hover:bg-white/[0.07]'}`}>
-      {/* Icon */}
       <div className={`mb-6 border w-12 h-12 flex items-center justify-center rounded-xl ${iconBg || 'bg-white/5'} ${iconBorder || 'border-white/10'}`}>
         <Icon className={`w-5 h-5 ${color || 'text-white/80'}`} />
       </div>
-
-      {/* Title */}
-      <h3 className="text-xl font-bold mb-4 text-white group-hover:text-white/90 transition-colors">
-        {title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-gray-400 leading-relaxed flex-grow group-hover:text-gray-300 transition-colors">
-        {description}
-      </p>
-
-      {/* CTA Link */}
+      <h3 className="text-xl font-bold mb-4 text-white group-hover:text-white/90 transition-colors">{title}</h3>
+      <p className="text-gray-400 leading-relaxed flex-grow group-hover:text-gray-300 transition-colors">{description}</p>
       <div className="mt-8">
-        <a href="#" className={`inline-flex items-center font-medium text-white/80 group-hover:${color ? color.replace('text-', 'text-') : 'text-blue-400'} transition-colors`}>
+        <a href="#" className="inline-flex items-center font-medium text-white/80 transition-colors">
           {ctaText}
           <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
         </a>

@@ -64,7 +64,7 @@ export default function TestimonialsSection() {
               <Quote className="text-cyan-400/20 w-12 h-12 mb-6" />
               
               <p className="text-gray-300 text-lg leading-relaxed mb-10 flex-1 z-10">
-                "{testimonial.feedback}"
+                &ldquo;{testimonial.feedback}&rdquo;
               </p>
 
               <div className="flex items-center gap-4 mt-auto w-full border-t border-white/10 pt-6 z-10">
@@ -86,7 +86,6 @@ export default function TestimonialsSection() {
                   </div>
                 </div>
               </div>
-
             </div>
           ))}
         </div>
