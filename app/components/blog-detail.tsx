@@ -62,19 +62,29 @@ export default function BlogDetail({ slug }: { slug: string }) {
         <div className="prose prose-invert prose-lg max-w-none text-gray-300">
           <p className="leading-loose text-lg mb-8">{post.content}</p>
 
-          <h2 className="text-2xl font-semibold mt-10 mb-4 text-white">The Future is Already Here</h2>
-          <p className="leading-loose mb-8">This is a simulated deep dive into the subject. As automation scales and software exponentially grows more capable, the necessity to adapt becomes paramount. Professionals must continue to reinvent their skill sets, heavily leaning into tools that offer a competitive edge rather than fearing displacement.</p>
+          {post.sections?.map((section, idx) => (
+            <div key={idx}>
+              <h2 className="text-2xl font-semibold mt-10 mb-4 text-white">{section.title}</h2>
+              <p className="leading-loose mb-8">{section.content}</p>
+            </div>
+          ))}
 
-          <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl my-10 italic text-xl text-gray-200 border-l-4 border-l-cyan-500 leading-relaxed shadow-lg shadow-black">
-            "The organizations that will thrive are those that empower their human capital with Artificial Intelligence capabilities, rather than attempting to replace them completely."
-          </div>
+          {post.quote && (
+            <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl my-10 italic text-xl text-gray-200 border-l-4 border-l-cyan-500 leading-relaxed shadow-lg shadow-black">
+              "{post.quote}"
+            </div>
+          )}
 
-          <h2 className="text-2xl font-semibold mt-10 mb-4 text-white">Actionable Next Steps</h2>
-          <ul className="list-disc pl-6 space-y-3 text-gray-300 my-6">
-            <li>Assess your daily tasks and calculate exactly how much is repetitive.</li>
-            <li>Explore modern AI tools that can safely automate up to 30% of your workflow without comprising quality.</li>
-            <li>Focus intensely on relationship building, strategy, and cross-domain pattern matching.</li>
-          </ul>
+          {post.actionSteps && post.actionSteps.length > 0 && (
+            <>
+              <h2 className="text-2xl font-semibold mt-10 mb-4 text-white">Actionable Next Steps</h2>
+              <ul className="list-disc pl-6 space-y-3 text-gray-300 my-6">
+                {post.actionSteps.map((step, idx) => (
+                  <li key={idx}>{step}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
 
         {/* Tags footer */}
