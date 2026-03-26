@@ -17,7 +17,6 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
-      // Remove setVisible(currentScroll > 50) so it's always on screen
       setScrolled(currentScroll > 20);
     };
     window.addEventListener("scroll", handleScroll);
@@ -34,28 +33,27 @@ export default function Navbar() {
   ];
 
   const handleHashClick = (hash: string) => {
-  if (hash === "#home") {
-    if (pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      router.push("/");
-      // after navigation, scroll to top
-      setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 300);
+    if (hash === "#home") {
+      if (pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        router.push("/");
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 300);
+      }
+      return;
     }
-    return;
-  }
 
-  if (pathname === "/") {
-    const el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  } else {
-    router.push(`/${hash}`);
-    setTimeout(() => {
+    if (pathname === "/") {
       const el = document.querySelector(hash);
       if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 300);
-  }
-};
+    } else {
+      router.push(`/${hash}`);
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  };
 
   return (
     <>
@@ -70,7 +68,6 @@ export default function Navbar() {
             scrolled ? "bg-black/80 backdrop-blur-md shadow-lg" : "bg-black shadow-md"
           } text-white`}
         >
-          {/* LOGO */}
           {/* LOGO */}
           <div className="flex items-center gap-2">
            <img src="/bgremovedlogo.png" alt="logo" className="w-[132.5px] object-contain scale-250" />
@@ -126,52 +123,52 @@ export default function Navbar() {
             </button>
           </div>
         </nav>
-      </div>
 
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <div className="fixed top-16 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-black text-white rounded-2xl shadow-lg p-6 flex flex-col items-center gap-6 z-50 md:hidden overflow-y-auto max-h-[80vh]">
-          {navLinks.map((link) => {
-            const isHash = link.href.startsWith("#");
+        {/* MOBILE MENU — inside navbar div, drops below the pill */}
+        {menuOpen && (
+          <div className="md:hidden mt-2 bg-black text-white rounded-2xl shadow-lg p-6 flex flex-col items-center gap-6 overflow-y-auto max-h-[80vh]">
+            {navLinks.map((link) => {
+              const isHash = link.href.startsWith("#");
 
-            if (isHash) {
+              if (isHash) {
+                return (
+                  <button
+                    key={link.name}
+                    onClick={() => {
+                      handleHashClick(link.href);
+                      setMenuOpen(false);
+                    }}
+                    className="text-lg text-gray-300 hover:text-white"
+                  >
+                    {link.name}
+                  </button>
+                );
+              }
+
               return (
-                <button
+                <Link
                   key={link.name}
-                  onClick={() => {
-                    handleHashClick(link.href);
-                    setMenuOpen(false);
-                  }}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
                   className="text-lg text-gray-300 hover:text-white"
                 >
                   {link.name}
-                </button>
+                </Link>
               );
-            }
+            })}
 
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-lg text-gray-300 hover:text-white"
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-
-          {!isSignedIn ? (
-            <button className="bg-white text-black px-6 py-2 rounded-full font-medium">
-              <SignInButton mode="modal">Login</SignInButton>
-            </button>
-          ) : (
-            <div className="bg-white text-black px-3 py-2 rounded-full">
-              <UserButton />
-            </div>
-          )}
-        </div>
-      )}
+            {!isSignedIn ? (
+              <button className="bg-white text-black px-6 py-2 rounded-full font-medium">
+                <SignInButton mode="modal">Login</SignInButton>
+              </button>
+            ) : (
+              <div className="bg-white text-black px-3 py-2 rounded-full">
+                <UserButton />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 }
