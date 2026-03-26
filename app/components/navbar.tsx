@@ -71,8 +71,9 @@ export default function Navbar() {
           } text-white`}
         >
           {/* LOGO */}
+          {/* LOGO */}
           <div className="flex items-center gap-2">
-            <img src="/aiversusumebg.png" alt="logo" height={100} width={100} />
+           <img src="/bgremovedlogo.png" alt="logo" className="w-[120px] object-contain scale-150" />
           </div>
 
           {/* DESKTOP LINKS */}
